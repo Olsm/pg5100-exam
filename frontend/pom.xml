@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>org.pg5100</groupId>
-        <artifactId>backend</artifactId>
+        <artifactId>exam</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
