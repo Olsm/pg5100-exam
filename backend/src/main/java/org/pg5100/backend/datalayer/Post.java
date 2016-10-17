@@ -3,9 +3,9 @@ package org.pg5100.backend.datalayer;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -28,11 +28,11 @@ public class Post {
     @NotNull
     @ManyToOne
     private User author;
-    @Max(100)
+    @Size(max = 50)
     private String title;
     @NotEmpty
     @Column(length = 50000)
-    private String content;
+    private String text;
     @Past
     private Date date;
     private int upVotes;
@@ -44,10 +44,10 @@ public class Post {
         this(null, null, null);
     }
 
-    public Post(User author, String title, String content) {
+    public Post(User author, String title, String text) {
         this.author = author;
         this.title = title;
-        this.content = content;
+        this.text = text;
         this.date = new Date();
         this.upVotes = 0;
         this.downVotes = 0;
@@ -66,8 +66,8 @@ public class Post {
         return comments;
     }
 
-    public String getContent() {
-        return content;
+    public String getText() {
+        return text;
     }
 
     public Date getDate() {
@@ -78,8 +78,8 @@ public class Post {
         return upVotes - downVotes;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public void setComments(List<Comment> comments) {
@@ -116,4 +116,11 @@ public class Post {
         return (this.getId() == null) ? other.getId() == null : this.getId().equals(other.getId());
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }
