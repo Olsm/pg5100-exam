@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pg5100.backend.businesslayer.PostBean;
 import org.pg5100.backend.businesslayer.UserBean;
+import org.pg5100.backend.datalayer.Comment;
 import org.pg5100.backend.datalayer.Post;
 import org.pg5100.backend.datalayer.User;
 
@@ -131,9 +132,10 @@ public class PostBeanTest {
 
     @Test
     public void testCreateComment() {
-        post = postEJB.registerComment(post, user, "Very comment");
+        Comment comment = postEJB.registerComment(post, user, "Very comment");
         assertEquals(1, post.getComments().size());
-        assertEquals("Very comment", post.getComments().get(0).getText());
+        assertEquals("Very comment", comment.getText());
+        assertEquals(comment, post.getComments().get(0));
     }
 
     @Test

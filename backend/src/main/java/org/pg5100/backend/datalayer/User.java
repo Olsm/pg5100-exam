@@ -8,9 +8,18 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
+
+@NamedQueries({
+        @NamedQuery(name = User.GET_POSTS, query = "select p from Post p where p.author = :user"),
+        @NamedQuery(name = User.GET_COMMENTS, query = "select c from Comment c where c.author = :user")
+})
 
 @Entity
 public class User {
+
+    public static final String GET_POSTS = "GET_POSTS";
+    public static final String GET_COMMENTS = "GET_COMMENTS";
 
     @Id @Pattern(regexp = "^(?i)[A-Z0-9_-]{3,15}$")
     private String username;

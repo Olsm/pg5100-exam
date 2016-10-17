@@ -2,6 +2,8 @@ package org.pg5100.backend.businesslayer;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.pg5100.backend.datalayer.Address;
+import org.pg5100.backend.datalayer.Comment;
+import org.pg5100.backend.datalayer.Post;
 import org.pg5100.backend.datalayer.User;
 
 import javax.ejb.Stateless;
@@ -11,6 +13,7 @@ import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.List;
 
 @Stateless
 public class UserBean {
@@ -53,6 +56,26 @@ public class UserBean {
 
     public User getUser(@NotNull String username) {
         return em.find(User.class, username.toLowerCase());
+    }
+
+    public int getKarma(User user) {
+        Query postQuery = em.createNamedQuery(User.GET_POSTS);
+        postQuery.setParameter("user", user);
+        List<Post> posts = postQuery.getResultList();
+
+        Query commentQuery = em.createNamedQuery(User.GET_COMMENTS);
+        commentQuery.setParameter("user", user);
+        List<Comment> comments = commentQuery.getResultList();
+
+        int karma = 0;
+        for (Post post : posts) {
+            karma += post.getVotes();
+        }
+        for (Comment comment : comments) {
+            karma += comment.getVotes();
+        }
+
+        return karma;
     }
 
     // Return true if a user with the given password exists

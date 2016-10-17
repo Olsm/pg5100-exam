@@ -37,12 +37,11 @@ public class PostBean {
         return (List<Post>) query.getResultList();
     }
 
-    public Post registerComment(Post post, User author, String content) {
+    public Comment registerComment(Post post, User author, String content) {
         Comment comment = new Comment(author, content);
         em.persist(comment);
         post.addComment(comment);
-        em.merge(post);
-        return post;
+        return comment;
     }
 
     public void upvote(Post post, User user) {

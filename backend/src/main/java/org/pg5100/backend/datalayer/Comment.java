@@ -3,6 +3,7 @@ package org.pg5100.backend.datalayer;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 @NamedQueries({
         @NamedQuery(name = Comment.SUM_COMMENTS, query = "select count(c) from Comment c"),
