@@ -13,11 +13,18 @@ public class Comment extends Post {
 
     public static final String SUM_COMMENTS = "SUM_COMMENTS";
 
+    boolean moderated;
+
     public Comment() {
         this(null, null);
     }
 
     public Comment(User author, String content) {
         super(author, null, content);
+        moderated = false;
+    }
+
+    public void moderate() {
+        moderated = !moderated;
     }
 }
