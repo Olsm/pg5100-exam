@@ -1,15 +1,13 @@
 package org.pg5100.backend.datalayer;
 
+import com.google.common.collect.Sets;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @NamedQueries({
         @NamedQuery(name = Post.SUM_POSTS, query = "select count(p) from Post p"),
@@ -35,8 +33,10 @@ public class Post {
     private String text;
     @Past
     private Date date;
-    private int upVotes;
-    private int downVotes;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<User> upVotes;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<User> downVotes;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
 
@@ -49,8 +49,8 @@ public class Post {
         this.title = title;
         this.text = text;
         this.date = new Date();
-        this.upVotes = 0;
-        this.downVotes = 0;
+        this.upVotes = Sets.newConcurrentHashSet();
+        this.downVotes = Sets.newConcurrentHashSet();
         comments = Collections.synchronizedList(new ArrayList<Comment>());
     }
 
@@ -75,7 +75,7 @@ public class Post {
     }
 
     public int getVotes() {
-        return upVotes - downVotes;
+        return upVotes.size() - downVotes.size();
     }
 
     public void setText(String text) {
@@ -88,20 +88,27 @@ public class Post {
 
     public synchronized void addComment(Comment comment) {comments.add(comment);}
 
-    public void upVote() {
-        this.upVotes++;
+    public void upVote(User user) {
+        upVotes.add(user);
+        downVotes.remove(user);
     }
 
-    public void downVote() {
-        this.downVotes++;
+    public void downVote(User user) {
+        downVotes.add(user);
+        upVotes.remove(user);
+    }
+
+    public void unVote(User user) {
+        upVotes.remove(user);
+        downVotes.remove(user);
     }
 
     public int getUpVotes() {
-        return upVotes;
+        return upVotes.size();
     }
 
     public int getDownVotes() {
-        return downVotes;
+        return downVotes.size();
     }
 
     @Override

@@ -45,13 +45,15 @@ public class PostBean {
         return post;
     }
 
-    public Post upvote(Post post) {
-        post.upVote();
-        return post;
+    public void upvote(Post post, User user) {
+        post.upVote(user);
     }
 
-    public Post downVote(Post post) {
-        post.downVote();
-        return post;
+    public void downVote(Post post, User user) {
+        post.downVote(user);
+    }
+
+    public void unVote(Post post, User user) {
+        post.unVote(user);
     }
 }

@@ -24,7 +24,8 @@ public class PostBeanTest {
     public static JavaArchive createDeployment() {
 
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackages(true, "org.pg5100.backend.businesslayer","org.pg5100.backend.datalayer", "org.apache.commons.codec")
+                .addPackages(true, "org.pg5100.backend.businesslayer","org.pg5100.backend.datalayer",
+                        "org.apache.commons.codec", "com.google.common.collect")
                 .addAsResource("META-INF/persistence.xml");
     }
 
@@ -46,7 +47,7 @@ public class PostBeanTest {
     }
 
     @Test
-    public void registerPost() throws Exception {
+    public void testCreatePost() throws Exception {
         assertEquals(user, post.getAuthor());
         assertEquals(content, post.getText());
     }
@@ -86,4 +87,72 @@ public class PostBeanTest {
         postEJB.registerPost(user, "title", new String(new char[50000]).replace('\0', ' '));
     }
 
+    @Test
+    public void testVoteFor() {
+        postEJB.upvote(post, user);
+        assertEquals(1, post.getUpVotes());
+        assertEquals(1, post.getVotes());
+        assertEquals(0, post.getDownVotes());
+    }
+
+    @Test
+    public void testVoteAgainst() {
+        postEJB.downVote(post, user);
+        assertEquals(0, post.getUpVotes());
+        assertEquals(-1, post.getVotes());
+        assertEquals(1, post.getDownVotes());
+    }
+
+    @Test
+    public void testCannotVoteForTwice() {
+        postEJB.upvote(post, user);
+        postEJB.upvote(post, user);
+        assertEquals(1, post.getUpVotes());
+    }
+
+    @Test
+    public void testCannotVoteAgainstTwice() {
+        postEJB.downVote(post, user);
+        postEJB.downVote(post, user);
+        assertEquals(1, post.getDownVotes());
+    }
+
+    @Test
+    public void testUnvote() {
+        postEJB.upvote(post, user);
+        postEJB.unVote(post, user);
+        assertEquals(0, post.getVotes());
+        postEJB.downVote(post, user);
+        postEJB.unVote(post, user);
+        assertEquals(0, post.getUpVotes());
+        assertEquals(0, post.getVotes());
+        assertEquals(0, post.getDownVotes());
+    }
+
+    @Test
+    public void testCreateComment() {
+        post = postEJB.registerComment(post, user, "Very comment");
+        assertEquals(1, post.getComments().size());
+        assertEquals("Very comment", post.getComments().get(0).getText());
+    }
+
+    @Test
+    public void testChangeVote() {
+        // TODO
+    }
+
+    @Test
+    public void testGetAllPostByTime() {
+        // TODO
+    }
+
+    @Test
+    public void testGetAllPostByScore() {
+        // TODO
+    }
+
+    @Test
+    public void testVoteForComment() {
+        // TODO
+    }
 }

@@ -91,5 +91,4 @@ public class UserBean {
 
         return new BigInteger(n * bitsPerChar, random).toString(twoPowerOfBits);
     }
-
 }
