@@ -9,7 +9,7 @@
 <h1>Theory - PG5100 Exam Autumn 2016</h1>
 <hr />
 <p><strong>1) Explain the main differences between JPQL and SQL, and why one might rather want to use JPQL when developing JEE programs.</strong></p>
-<p>answer</p>
+<p>Java Persistence Query Language is based on SQL and the syntax is similiar. It is used to simplify creating and reading entities in a relational database. SQL works directly against the database. JPQL works with java class instances. Using JPQL makes it simple to return entity objects, instead of having to manually convert result set to objects as you would with SQL.&nbsp;Entities are often related to each other and JPQL has features to navigate "one to one", "one to many", "many to many", and "many to one" relationships. However JPQL does have some limitations so you may have to use native SQL in some cases. When creating an enterprise application using java objects that should be saved in a database, and using relationships, there are many advantages in using JPQL.&nbsp;</p>
 <hr />
 <p><strong>2) In the context of JPA, explain the main differences between a &ldquo;pessimistic&rdquo; and an &ldquo;optimistic&rdquo; lock, and when one might choose to use one of them instead of the other.</strong></p>
 <p>answer</p>
