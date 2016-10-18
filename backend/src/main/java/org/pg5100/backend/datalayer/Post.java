@@ -1,6 +1,7 @@
 package org.pg5100.backend.datalayer;
 
 import com.google.common.collect.Sets;
+import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -33,9 +34,15 @@ public class Post {
     private String text;
     @Past
     private Date date;
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="POST_UPVOTES",
+            joinColumns={@JoinColumn(name="POST_ID")},
+            inverseJoinColumns={@JoinColumn(name="USERNAME")})
     private Set<User> upVotes;
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="POST_DOWNVOTES",
+            joinColumns={@JoinColumn(name="POST_ID")},
+            inverseJoinColumns={@JoinColumn(name="USERNAME")})
     private Set<User> downVotes;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
@@ -51,7 +58,7 @@ public class Post {
         this.date = new Date();
         this.upVotes = Sets.newConcurrentHashSet();
         this.downVotes = Sets.newConcurrentHashSet();
-        comments = Collections.synchronizedList(new ArrayList<Comment>());
+        this.comments = Collections.synchronizedList(new ArrayList<Comment>());
     }
 
     public Long getId() {
@@ -75,7 +82,7 @@ public class Post {
     }
 
     public int getVotes() {
-        return upVotes.size() - downVotes.size();
+        return getUpVotes() - getDownVotes();
     }
 
     public void setText(String text) {

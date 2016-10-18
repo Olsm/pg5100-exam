@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pg5100.backend.businesslayer.UserBean;
 import org.pg5100.backend.datalayer.Address;
+import org.pg5100.backend.datalayer.Post;
 import org.pg5100.backend.datalayer.User;
 
 import javax.ejb.EJB;
@@ -24,8 +25,8 @@ public class UserBeanTest {
     public static JavaArchive createDeployment() {
 
         return ShrinkWrap.create(JavaArchive.class)
-                .addClasses(UserBean.class, User.class, Address.class)
-                .addPackages(true, "org.apache.commons.codec")
+                .addPackages(true, "org.apache.commons.codec", "com.google.common.collect",
+                        "org.pg5100.backend.datalayer", "org.pg5100.backend.businesslayer")
                 .addAsResource("META-INF/persistence.xml");
     }
 

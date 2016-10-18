@@ -24,7 +24,9 @@ public class PostBean {
     }
 
     public Post getPost(Long id) {
-        return em.find(Post.class, id);
+        Query query = em.createQuery("SELECT p FROM Post p left join fetch p.upVotes left join fetch p.downVotes where p.id = :id");
+        query.setParameter("id", id);
+        return (Post) query.getSingleResult();
     }
 
     public int getNumberOfPosts(){
@@ -46,13 +48,16 @@ public class PostBean {
 
     public void upvote(Post post, User user) {
         post.upVote(user);
+        user.upVote(post);
     }
 
     public void downVote(Post post, User user) {
         post.downVote(user);
+        user.downVote(post);
     }
 
     public void unVote(Post post, User user) {
         post.unVote(user);
+        user.unVote(post);
     }
 }

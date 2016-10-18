@@ -1,6 +1,7 @@
 package org.pg5100.backend.businesslayer;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.hibernate.Hibernate;
 import org.pg5100.backend.datalayer.Address;
 import org.pg5100.backend.datalayer.Comment;
 import org.pg5100.backend.datalayer.Post;
@@ -58,14 +59,21 @@ public class UserBean {
         return em.find(User.class, username.toLowerCase());
     }
 
-    public int getKarma(User user) {
+    public List<Post> getPosts(User user) {
         Query postQuery = em.createNamedQuery(User.GET_POSTS);
         postQuery.setParameter("user", user);
-        List<Post> posts = postQuery.getResultList();
+        return postQuery.getResultList();
+    }
 
-        Query commentQuery = em.createNamedQuery(User.GET_COMMENTS);
-        commentQuery.setParameter("user", user);
-        List<Comment> comments = commentQuery.getResultList();
+    public List<Comment> getComments(User user) {
+        Query postQuery = em.createNamedQuery(User.GET_COMMENTS);
+        postQuery.setParameter("user", user);
+        return postQuery.getResultList();
+    }
+
+    public int getKarma(User user) {
+        List<Post> posts = getPosts(user);
+        List<Comment> comments = getComments(user);
 
         int karma = 0;
         for (Post post : posts) {
