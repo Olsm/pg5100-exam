@@ -49,7 +49,7 @@ public class UserController implements Serializable{
 
     public String logOut(){
         registeredUser = null;
-        return "home.jsf";
+        return "index.jsf";
     }
 
 
@@ -57,7 +57,7 @@ public class UserController implements Serializable{
         boolean valid = userEJB.login(formUserName, formPassword);
         if(valid){
             registeredUser = userEJB.getUser(formUserName);
-            return "home.jsf";
+            return "index.jsf";
         } else {
             return "login.jsf";
         }
@@ -73,7 +73,7 @@ public class UserController implements Serializable{
 
         if(user != null){
             registeredUser = user;
-            return "home.jsf";
+            return "index.jsf";
         } else {
             return "newUser.jsf";
         }

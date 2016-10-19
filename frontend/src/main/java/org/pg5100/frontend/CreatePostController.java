@@ -31,7 +31,7 @@ public class CreatePostController {
             return "newEvent.jsf";
         }
 
-        return "home.jsf";
+        return "index.jsf";
     }
 
 
