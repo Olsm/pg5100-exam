@@ -17,7 +17,8 @@ import java.util.List;
 @SessionScoped
 public class PostController implements Serializable{
 
-    private List<Post> postList;
+    private String formTitle;
+    private String formText;
 
     @EJB
     private PostBean postEJB;
@@ -26,20 +27,36 @@ public class PostController implements Serializable{
     @Inject
     private UserController userController;
 
+    public String registerNew(){
 
-    @PostConstruct
-    public void init(){
-        postList = Collections.synchronizedList(new ArrayList<>());
-        updatePostList();
+        try {
+            postEJB.registerPost(userController.getRegisteredUser(), formTitle, formText);
+        } catch (Exception e){
+            return "newPost.jsf";
+        }
+
+        return "index.jsf";
     }
 
 
     public List<Post> getPostList(){
-        return postList;
+        return postEJB.getAll();
     }
 
-    public void updatePostList() {
-        postList = postEJB.getAll();
+    public String getFormTitle() {
+        return formTitle;
+    }
+
+    public void setFormTitle(String formTitle) {
+        this.formTitle = formTitle;
+    }
+
+    public String getFormText() {
+        return formText;
+    }
+
+    public void setFormText(String formext) {
+        this.formText = formext;
     }
 
 }
