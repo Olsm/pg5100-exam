@@ -24,19 +24,17 @@
                 <h:outputLabel value="Confirm password : "/>
                 <h:inputSecret value="#{userController.formConfirmPassword}" id="confirmPassword"/>
 
-                <h:outputLabel value="Firt name : "/>
-                <h:inputText value="#{userController.formFirstName}" id="firstName"/>
+                <h:outputLabel value="Name : "/>
+                <h:inputText value="#{userController.formName}" id="name"/>
 
-                <h:outputLabel value="Middle name : "/>
-                <h:inputText value="#{userController.formMiddleName}" id="middleName"/>
+                <h:outputLabel value="Email : "/>
+                <h:inputText value="#{userController.formEmail}" id="email"/>
 
                 <h:outputLabel value="Last name : "/>
-                <h:inputText value="#{userController.formLastName}" id="lastName"/>
+                <h:inputText value="#{userController.formCity}" id="city"/>
 
                 <h:outputLabel value="Country : "/>
-                <h:selectOneMenu value="#{userController.formCountry}" id="country">
-                    <f:selectItems value="#{userController.countries}" />
-                </h:selectOneMenu>
+                <h:inputText value="#{userController.formCountry}" id="country"/>
 
 
             </h:panelGrid>
