@@ -15,14 +15,14 @@
 
             <h:panelGrid columns="2">
                 <h:outputLabel value="User name : "/>
-                <h:inputText value="#{loggingController.formUserName}" id="userName"/>
+                <h:inputText value="#{userController.formUserName}" id="userName"/>
 
                 <h:outputLabel value="Password : "/>
-                <h:inputSecret value="#{loggingController.formPassword}" id="password"/>
+                <h:inputSecret value="#{userController.formPassword}" id="password"/>
 
             </h:panelGrid>
 
-            <h:commandButton value="Log in" action="#{loggingController.logIn}" id="loginButton"/>
+            <h:commandButton value="Log in" action="#{userController.logIn}" id="loginButton"/>
         </h:form>
 
         <h:button value="Create new" outcome="newUser.jsf" id="newUser"/>

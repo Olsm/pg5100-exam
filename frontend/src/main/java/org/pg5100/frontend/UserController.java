@@ -2,8 +2,6 @@ package org.pg5100.frontend;
 
 import org.pg5100.backend.businesslayer.UserBean;
 import org.pg5100.backend.datalayer.Address;
-//import org.pg5100.backend.Countries;
-import org.pg5100.backend.businesslayer.UserBean;
 import org.pg5100.backend.datalayer.User;
 
 import javax.ejb.EJB;
@@ -13,28 +11,23 @@ import java.io.Serializable;
 
 @Named
 @SessionScoped
-public class LoggingController implements Serializable{
+public class UserController implements Serializable{
 
     @EJB
     private UserBean userEJB;
 
     private String formUserName;
+    private String formEmail;
     private String formPassword;
     private String formConfirmPassword;
-    private String formFirstName;
-    private String formEmail;
+    private String formName;
     private String formCity;
     private String formCountry;
 
+    // The current user registered in this session
+    private User registeredUser;
 
-
-    /**
-     * The current user registered in this session
-     */
-    private String registeredUser;
-
-
-    public LoggingController(){
+    public UserController(){
     }
 
     public String getUserCountry(){
@@ -42,26 +35,16 @@ public class LoggingController implements Serializable{
             return null;
         }
 
-        return userEJB.getUser(registeredUser).getAddress().getCountry();
+        return registeredUser.getAddress().getCountry();
     }
-
-    /*public List<String> getCountries(){
-        return Countries.getCountries();
-    }*/
-
-
 
     public boolean isLoggedIn(){
         return registeredUser != null;
     }
 
 
-    public String getRegisteredUser(){
+    public User getRegisteredUser(){
         return registeredUser;
-    }
-
-    public User getUser(){
-        return userEJB.getUser(registeredUser);
     }
 
     public String logOut(){
@@ -73,7 +56,7 @@ public class LoggingController implements Serializable{
     public String logIn(){
         boolean valid = userEJB.login(formUserName, formPassword);
         if(valid){
-            registeredUser = formUserName;
+            registeredUser = userEJB.getUser(formUserName);
             return "home.jsf";
         } else {
             return "login.jsf";
@@ -86,15 +69,10 @@ public class LoggingController implements Serializable{
             return "newUser.jsf";
         }
 
-        boolean registered = false;
+        User user = userEJB.registerNewUser(formUserName, formPassword, formEmail, formName, new Address(formCity, formCountry));
 
-        try {
-            registered = userEJB.registerNewUser(formUserName, formPassword, formEmail, formFirstName, new Address(formCity, formCountry)) != null;
-        } catch (Exception e){
-        }
-
-        if(registered){
-            registeredUser = formUserName;
+        if(user != null){
+            registeredUser = user;
             return "home.jsf";
         } else {
             return "newUser.jsf";
@@ -125,20 +103,20 @@ public class LoggingController implements Serializable{
         this.formConfirmPassword = formConfirmPassword;
     }
 
-    public String getFormFirstName() {
-        return formFirstName;
+    public String getFormName() {
+        return formName;
     }
 
-    public void setFormFirstName(String formFirstName) {
-        this.formFirstName = formFirstName;
+    public void setFormName(String formName) {
+        this.formName = formName;
     }
 
-    public String getFormEmail() {
-        return formEmail;
+    public String getFormCountry() {
+        return formCountry;
     }
 
-    public void setFormEmail(String formEmail) {
-        this.formEmail = formEmail;
+    public void setFormCountry(String formCountry) {
+        this.formCountry = formCountry;
     }
 
     public String getFormCity() {
@@ -149,11 +127,11 @@ public class LoggingController implements Serializable{
         this.formCity = formCity;
     }
 
-    public String getFormCountry() {
-        return formCountry;
+    public String getFormEmail() {
+        return formEmail;
     }
 
-    public void setFormCountry(String formCountry) {
-        this.formCountry = formCountry;
+    public void setFormEmail(String formEmail) {
+        this.formEmail = formEmail;
     }
 }

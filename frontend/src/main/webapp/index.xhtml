@@ -10,14 +10,40 @@
 
 <ui:composition template="layout.xhtml">
 
-    <ui:define name="title">PG5100 Exam Autumn 2016</ui:define>
+    <ui:define name="title">Reddit Home Page</ui:define>
 
     <ui:define name="content">
 
-        <h2><a href="theory.html">theory</a></h2>
+
+        <c:if test="#{userController.loggedIn}">
+            <h:button value="Create Post" outcome="newPost.xhtml" id="createPost"/>
+        </c:if>
+
+
+        <h2>Posts</h2>
+
+        <c:choose>
+            <c:when test="#{postController.postList.size() == 0}">
+                <h:outputText value="No posts yet :( Be the first to create one!"/>
+            </c:when>
+
+            <c:otherwise>
+
+                <h:dataTable value="#{postController.postList}" var="post" border="1" id="postTable">
+                    <h:column>
+                        <f:facet name="header">Title</f:facet>
+                        <h:outputText value="#{post.title}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Author</f:facet>
+                        <h:outputText value="#{post.author.username}"/>
+                    </h:column>
+
+                </h:dataTable>
+            </c:otherwise>
+        </c:choose>
 
     </ui:define>
 
 </ui:composition>
-
 </html>

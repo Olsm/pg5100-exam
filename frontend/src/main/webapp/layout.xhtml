@@ -9,21 +9,21 @@
 
 <h:head>
   <title>
-    <ui:insert name="title">PG5100 Exam</ui:insert>
+    <ui:insert name="title">Default title</ui:insert>
   </title>
 </h:head>
 
 
 <h:body>
 
-  <h:outputText value="PG5100 Exam" />
+  <h:outputText value="PG5100 Exam Example" />
   <hr/>
 
   <c:choose>
-    <c:when test="#{loggingController.loggedIn}">
-      <h:outputText value="Hi #{loggingController.registeredUser}!  " id="welcomeMessage"/>
+    <c:when test="#{userController.loggedIn}">
+      <h:outputText value="Hi #{userController.registeredUser}!  " id="welcomeMessage"/>
       <h:form id="logoutForm">
-        <h:commandButton value="Log Out" action="#{loggingController.logOut}" id="logout" />
+        <h:commandButton value="Log Out" action="#{userController.logOut}" id="logout" />
       </h:form>
     </c:when>
     <c:otherwise>
