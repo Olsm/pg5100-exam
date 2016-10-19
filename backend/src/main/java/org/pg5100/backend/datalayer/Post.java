@@ -1,7 +1,5 @@
 package org.pg5100.backend.datalayer;
 
-import com.google.common.collect.Sets;
-import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -56,8 +54,8 @@ public class Post {
         this.title = title;
         this.text = text;
         this.date = new Date();
-        this.upVotes = Sets.newConcurrentHashSet();
-        this.downVotes = Sets.newConcurrentHashSet();
+        this.upVotes = new HashSet<>();
+        this.downVotes = new HashSet<>();
         this.comments = Collections.synchronizedList(new ArrayList<Comment>());
     }
 

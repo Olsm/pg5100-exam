@@ -25,7 +25,7 @@ public class UserBeanTest {
     public static JavaArchive createDeployment() {
 
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackages(true, "org.apache.commons.codec", "com.google.common.collect",
+                .addPackages(true, "org.apache.commons.codec",
                         "org.pg5100.backend.datalayer", "org.pg5100.backend.businesslayer")
                 .addAsResource("META-INF/persistence.xml");
     }

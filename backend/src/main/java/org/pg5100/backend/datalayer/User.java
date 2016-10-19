@@ -1,6 +1,5 @@
 package org.pg5100.backend.datalayer;
 
-import com.google.common.collect.Sets;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -9,6 +8,7 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -55,8 +55,8 @@ public class User {
         this.name = name;
         this.email = email;
         this.date = new Date();
-        this.upVotes = Sets.newConcurrentHashSet();
-        this.downVotes = Sets.newConcurrentHashSet();
+        this.upVotes = new HashSet<>();
+        this.downVotes = new HashSet<>();
     }
 
     public User(String username) {
@@ -133,5 +133,9 @@ public class User {
 
     public int getDownVotes() {
         return downVotes.size();
+    }
+
+    public String toString() {
+        return getUsername();
     }
 }

@@ -4,11 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <packaging>pom</packaging>
+
     <groupId>org.pg5100</groupId>
     <artifactId>exam</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <name>PG5100 Exam</name>
+
+    <modules>
+        <module>backend</module>
+        <module>frontend</module>
+        <module>report</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,11 +26,6 @@
         <fs>${file.separator}</fs>
     </properties>
 
-    <modules>
-        <module>backend</module>
-        <module>frontend</module>
-        <module>report</module>
-    </modules>
 
     <!--
     Here we define all third-party dependencies we need in the sub-modules, so that we
@@ -412,6 +413,5 @@
             </plugins>
         </pluginManagement>
     </build>
-
 
 </project>

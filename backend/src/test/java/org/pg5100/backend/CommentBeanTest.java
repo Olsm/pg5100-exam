@@ -29,7 +29,7 @@ public class CommentBeanTest {
 
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackages(true, "org.pg5100.backend.datalayer", "org.pg5100.backend.businesslayer",
-                        "org.apache.commons.codec", "com.google.common.collect")
+                        "org.apache.commons.codec")
                 .addAsResource("META-INF/persistence.xml");
     }
 
