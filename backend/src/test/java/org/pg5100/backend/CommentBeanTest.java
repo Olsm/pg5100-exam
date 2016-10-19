@@ -60,6 +60,14 @@ public class CommentBeanTest {
     }
 
     @Test
+    public void testCreateComment() {
+        Comment comment = commentBean.registerComment(post, user, "Very comment");
+        assertEquals(1, post.getComments().size());
+        assertEquals("Very comment", comment.getText());
+        assertEquals(comment, post.getComments().get(0));
+    }
+
+    @Test
     public void testModerateOwn() {
         // TODO
     }

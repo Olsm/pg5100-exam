@@ -59,6 +59,11 @@ public class UserBeanTest {
         assertEquals(users+1, userEJB.getNumberOfUsers());
     }
 
+    @Test
+    public void testGetComment() {
+        assertEquals(0, userEJB.getComments(createUser("username", "user@user.user")).size());
+    }
+
     @Test(expected = ArquillianProxyException.class)
     public void testUserMustHaveUsername() {
         createUser(null, "password");
