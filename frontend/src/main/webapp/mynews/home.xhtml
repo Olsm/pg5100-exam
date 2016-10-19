@@ -8,7 +8,7 @@
       xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 >
 
-<ui:composition template="layout.xhtml">
+<ui:composition template="../layout.xhtml">
 
     <ui:define name="title">PG5100 Exam</ui:define>
 
@@ -31,13 +31,28 @@
 
                 <h:dataTable value="#{postController.postList}" var="post" border="1" id="postTable">
                     <h:column>
+                        <f:facet name="header">Time</f:facet>
+                        <h:outputText value="#{post.date}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Author</f:facet>
+                        <h:outputText value="#{post.author}"/>
+                    </h:column>
+                    <h:column>
                         <f:facet name="header">Title</f:facet>
                         <h:outputText value="#{post.title}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Author</f:facet>
-                        <h:outputText value="#{post.author.username}"/>
+                        <f:facet name="header">Score</f:facet>
+                        <!-- <h:outputText value="#{post.votes}"/> -->
                     </h:column>
+                    <h:column>
+                        <f:facet name="header">Your vote</f:facet>
+                        <h:button value="-1"/>
+                        <h:button value="0"/>
+                        <h:button value="+1"/>
+                    </h:column>
+
 
                 </h:dataTable>
             </c:otherwise>

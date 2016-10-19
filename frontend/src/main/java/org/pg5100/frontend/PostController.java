@@ -35,7 +35,7 @@ public class PostController implements Serializable{
             return "newPost.jsf";
         }
 
-        return "index.jsf";
+        return "home.jsf";
     }
 
 
